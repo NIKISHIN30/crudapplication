@@ -1,0 +1,59 @@
+  <div *ngIf="undefined === restItems">Loading...</div>
+	<div *ngIf="undefined !== restItems">
+	  <div class="container">
+		  <div class="col-md-12">
+			  <table class="table table-bordered table-striped table-hover">
+			<thead>
+			  <tr>
+				<th class="text-center">Title</th>
+				<th class="text-center">Description</th>
+				<th class="text-center">&nbsp;</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr *ngFor="let documents of restItems['documents']">
+				<td width="30%">{{ documents.fields.title.stringValue }}</td>
+				<td width="30%">{{ documents.fields.description.stringValue }}</td>
+				
+				<td width="40%">
+				  <button class="btn btn-info"
+								(click)="showEditTaskForm(documents)">
+							   <i class="fa fa-edit"> Update</i>
+					  </button> &nbsp;&nbsp;&nbsp;&nbsp;
+				  <button class="btn btn-danger"
+							   (click)="removeTask(documents)">
+							   <i class="fa fa-minus"> Delete</i>
+					</button>
+				</td>
+			  </tr>
+			</tbody>
+		  </table>
+		  
+		    <button class="btn btn-success"
+               (click)="showAddTaskForm()"><i class="fa fa-plus"></i> Add task</button>
+		  <br /><br /><br /><br />
+
+		  <form *ngIf="taskForm"  #f="ngForm" (ngSubmit)="saveTask(f.value, documents)">
+			<h2>Add New Task</h2>
+			<p>Title: <input type="text" name="title" [(ngModel)]="title"/></p>
+			<p>Description: <input type="text" name="description" [(ngModel)]="desc"/></p> 
+			<p>
+			  <input type="submit"  class="btn btn-primary" />&nbsp;&nbsp;&nbsp;&nbsp;
+			  <button type="button" class="btn btn-warning" (click)="cancelNewTask()">Cancel</button>
+			  <br /><br /><br /><br />
+			</p>
+		   </form>
+
+			<form *ngIf="editUserTask" #f="ngForm" (ngSubmit)="updateTask(f.value)">
+			<h2>Edit Task</h2>
+			<p>Title: <input type="text" name="title" [(ngModel)]="title"/></p>
+			<p>Description: <input type="text" name="description" [(ngModel)]="desc"/></p>			
+			<p>
+			  <input type="submit"  class="btn btn-primary" />&nbsp;&nbsp;&nbsp;&nbsp;
+			  <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
+			  <br /><br /><br /><br />
+			</p>
+		   </form>
+		  </div>
+		</div>
+	</div>
